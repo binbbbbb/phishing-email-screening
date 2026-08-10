@@ -1,0 +1,10 @@
+interface:
+  display_name: "Phishing Email Screening"
+  short_description: "Scan Coremail metadata and auto-sync abnormal results to Notion"
+  default_prompt: "Use $phishing-email-screening to scan a date range and automatically sync abnormal findings to configured Notion pages when Notion MCP is available."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "notion"
+      description: "Read the configured allowlist page and automatically publish scan results and execution logs."
