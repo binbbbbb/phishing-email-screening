@@ -1,5 +1,23 @@
 # 钓鱼邮件初筛
 
+## Codex 与 CodeBuddy 插件
+
+本仓库可同时作为 Codex 插件和 CodeBuddy 插件市场加载：
+
+- Codex 清单位于 `.codex-plugin/plugin.json`。
+- CodeBuddy 插件清单位于 `.codebuddy-plugin/plugin.json`，市场清单位于 `.codebuddy-plugin/marketplace.json`。
+- 两个平台都将 `skills/` 声明为 Skill 目录；`skills/phishing-email-screening` 是唯一可编辑 Skill 源。
+
+使用 CodeBuddy 添加 GitHub `main` 分支 ZIP 市场：
+
+```text
+https://github.com/binbbbbb/phishing-email-screening/archive/refs/heads/main.zip
+```
+
+添加市场后安装 `phishing-email-screening@phishing-email-screening-marketplace`。正式发布时建议创建版本 tag，并改用 `https://github.com/binbbbbb/phishing-email-screening/archive/refs/tags/<tag>.zip`，避免分支内容变化与插件缓存版本不一致。
+
+插件不随安装启动独立 MCP Server。Codex 中的 Notion 依赖继续通过 Skill 的 `agents/openai.yaml` 声明；CodeBuddy 运行前也需要在本机连接可用的 Notion MCP。
+
 基于 Coremail 返回的邮件元数据和 Notion 白名单进行保守初筛。当前接口不含正文、链接、附件及 SPF/DKIM/DMARC，因此结果只分为“可信候选、待确认、可疑”，不代表最终安全结论。
 
 ## 配置
@@ -9,6 +27,8 @@
 3. 仅在改用 REST/Data Source 模式时，才配置 Notion Token、白名单 Data Source ID 和结果 Data Source ID。
 
 不要把 Coremail 凭据、Cookie 或 Notion Token 粘贴到 Agent 对话、日志或版本库中。自动登录需要 Python Playwright 和 Google Chrome；可用 `python -m pip install playwright` 安装 Python 依赖。静态 Cookie 模式仍可将 `coremail.auth.mode` 设为 `cookie`，并通过 `COREMAIL_COOKIE` 或本地 `coremail.cookie` 提供。环境变量 `NOTION_TOKEN`、`NOTION_ALLOWLIST_DATA_SOURCE_ID`、`NOTION_RESULTS_DATA_SOURCE_ID` 可覆盖本地配置。
+
+GitHub 自动生成的 ZIP 只包含已提交文件；`config/config.local.json` 被明确排除，不会进入插件市场包。安装后应在插件运行目录本地创建该文件，或通过受保护的环境变量提供可覆盖的敏感值，不要把真实凭据提交到 GitHub。
 
 ## 运行
 

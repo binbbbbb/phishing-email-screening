@@ -1,0 +1,15 @@
+{
+  "name": "phishing-email-screening-marketplace",
+  "description": "Plugin marketplace for the Coremail phishing-email metadata screening workflow.",
+  "owner": {
+    "name": "Phishing Email Screening Maintainers"
+  },
+  "plugins": [
+    {
+      "name": "phishing-email-screening",
+      "source": "./",
+      "description": "Screen Coremail email metadata and synchronize abnormal findings to configured Notion pages.",
+      "version": "1.0.0"
+    }
+  ]
+}
